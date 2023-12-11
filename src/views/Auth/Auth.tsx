@@ -51,8 +51,19 @@ const Auth = () => {
     <Wrapper>
       <AuthTitle>Authentication</AuthTitle>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <input type='email' id='email' placeholder='E-mail' {...register('email')} required />
-        <input type='password' placeholder='Password' {...register('password')} required />
+        <input
+          type='email'
+          id='email'
+          placeholder='E-mail'
+          {...register('email')}
+          required
+        />
+        <input
+          type='password'
+          placeholder='Password'
+          {...register('password')}
+          required
+        />
         {isUserNew && (
           <input
             type='password'
