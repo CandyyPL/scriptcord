@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   height: 100vh;
   height: 100svh;
 
-  background-color: ${({ theme }) => theme.colors[3]};
+  background-color: #222;
 
   display: flex;
   flex-direction: column;
@@ -20,9 +20,9 @@ export const AuthTitle = styled.h1`
   color: #eee;
 `
 
-export const Form = styled.form`
+export const Form = styled.form<{ isUserNew: boolean }>`
   width: 400px;
-  height: 300px;
+  height: ${(props) => (props.isUserNew ? '400px' : '300px')};
 
   display: flex;
   flex-direction: column;
@@ -58,7 +58,7 @@ export const Form = styled.form`
     width: 250px;
     height: 60px;
 
-    background-color: ${({ theme }) => theme.colors[1]};
+    background-color: #0b525b;
     border: none;
     border-radius: 5px;
 
@@ -70,7 +70,7 @@ export const Form = styled.form`
     transition: all 0.3s;
 
     &:hover {
-      background-color: ${({ theme }) => theme.colors[0]};
+      background-color: #006466;
 
       color: #fff;
     }

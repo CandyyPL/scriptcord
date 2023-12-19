@@ -1,11 +1,12 @@
 import { useState, useContext } from 'react'
 import { Wrapper, AuthTitle, Form } from '@/views/Auth/Auth.styles.ts'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { register as authRegister, getSession, login } from '@/db/auth.ts'
+import { register as authRegister, getSession, login as authLogin } from '@/db/auth.ts'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext, TAuthContext } from '@/providers/AuthProvider.tsx'
 
 export type TData = {
+  username: string
   email: string
   password: string
   passwordConfirm: null | string
@@ -26,8 +27,6 @@ const Auth = () => {
 
       try {
         await authRegister(data)
-        const session = await getSession()
-        setSession(session.data?.session)
       } catch (e) {
         console.log(e)
       }
@@ -35,14 +34,15 @@ const Auth = () => {
       setIsUserNew((prev) => !prev)
     } else {
       try {
-        await login(data)
-        const session = await getSession()
-        setSession(session.data?.session)
-        navigate('/dashboard')
+        await authLogin(data)
       } catch (e) {
         console.log(e)
       }
     }
+
+    const session = await getSession()
+    setSession(session.data?.session)
+    navigate('/dashboard')
 
     reset({ email: '', password: '' })
   }
@@ -50,7 +50,18 @@ const Auth = () => {
   return (
     <Wrapper>
       <AuthTitle>Authentication</AuthTitle>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form
+        onSubmit={handleSubmit(onSubmit)}
+        isUserNew={isUserNew}>
+        {isUserNew && (
+          <input
+            type='text'
+            id='username'
+            placeholder='Username'
+            {...register('username')}
+            required
+          />
+        )}
         <input
           type='email'
           id='email'

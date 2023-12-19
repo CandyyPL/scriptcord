@@ -9,7 +9,7 @@ import App from './App.tsx'
 
 WebFont.load({
   google: {
-    families: ['Roboto', 'Ubuntu'],
+    families: ['Roboto', 'Ubuntu', 'Nunito'],
   },
 })
 
